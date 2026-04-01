@@ -1,0 +1,65 @@
+:root {
+    --secdb-severity-critical: #000000;
+    --secdb-severity-high: #d63939;
+    --secdb-severity-medium: #f76707;
+    --secdb-severity-low: #ffc107;
+    --secdb-severity-unknown: #17a2b8;
+}
+
+body {
+    font-family: var(--vscode-font-family);
+    color: var(--vscode-foreground);
+    background-color: var(--vscode-editor-background);
+}
+
+hr {
+    border-top: 1px solid var(--vscode-contrastActiveBorder);
+    margin: 1rem 0;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.25em 0.5em;
+    font-size: 75%;
+    font-weight: 700;
+    border-radius: 0.25rem;
+    border: 0px solid transparent;
+    color: #ffffff;
+    background-color: var(--secdb-severity-unknown);
+}
+
+.badge.severity-critical {
+    background-color: var(--secdb-severity-critical);
+}
+
+.badge.severity-high {
+    background-color: var(--secdb-severity-high);
+}
+
+.badge.severity-medium,
+.badge.severity-moderate {
+    background-color: var(--secdb-severity-medium);
+}
+
+.badge.severity-low {
+    background-color: var(--secdb-severity-low);
+}
+
+.badge.severity-unknown,
+.badge.severity-none {
+    background-color: var(--secdb-severity-unknown);
+}
+
+table.finding-details {
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+.finding-details tr {
+    padding-bottom: 0.5rem;
+}
+
+.finding-details th {
+    text-align: left;
+    padding-right: 1rem;
+}

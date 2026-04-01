@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{style}}">
+</head>
+<body>
+
+    <header>  
+        <h1>{{title}}</h1>
+        <h3>
+            <span class="badge severity-{{severity}}">
+                {{severity}}
+            </span>
+            <span>{{advisoryId}}</span>
+        </h3>
+    </header>
+
+    <table class="finding-details">
+        <tbody>
+            <tr>
+                <th>CVEs</th>
+                <td>{{cves}}</td>
+            </tr>
+            <tr>
+                <th>PURL</th>
+                <td><samp>{{purl}}</samp></td>
+            </tr>
+            <tr>
+                <th>Dependency Type</th>
+                <td>{{dependencyType}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <p>{{summary}}</p>
+    <p>{{description}}</p>
+
+    <h2>See also</h2>
+    <ul>
+        <li><a href="{{advisoryUrl}}" target="_blank">View Advisory in ZEN SecDB</a></li>
+    </ul>
+</body>
+</html>

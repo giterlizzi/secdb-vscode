@@ -1,0 +1,191 @@
+{
+  "name": "zen-secdb",
+  "publisher": "gdt",
+  "displayName": "ZEN SecDB",
+  "description": "Dependency audit and vulnerability intelligence for Visual Studio Code",
+  "version": "1.0.0",
+  "icon": "resources/icons/extension.png",
+  "engines": {
+    "vscode": "^1.91.0"
+  },
+  "keywords": [
+    "ZEN SecDB",
+    "Security",
+    "Vulnerability",
+    "Dependencies",
+    "Dependency Audit",
+    "PURL",
+    "CVE",
+    "MCP",
+    "AI"
+  ],
+  "categories": [
+    "Programming Languages",
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "chatParticipants": [
+      {
+        "id": "zen-secdb.secdb",
+        "fullName": "ZEN SecDB",
+        "name": "secdb",
+        "description": "Investigate findings, explain vulnerabilities and analyze security context.",
+        "isSticky": true,
+        "commands": [
+          {
+            "name": "info",
+            "description": "Get detailed information about a finding by ID."
+          }
+        ]
+      }
+    ],
+    "mcpServerDefinitionProviders": [
+      {
+        "id": "secdbMcpProvider",
+        "label": "ZEN SecDB"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "secdbDependenciesView",
+          "name": "Dependencies (ZEN SecDB)"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "secdb.dependencies.scan",
+          "when": "view == secdbDependenciesView",
+          "group": "navigation",
+          "order": 0
+        },
+        {
+          "command": "secdb.dependencies.audit",
+          "when": "view == secdbDependenciesView",
+          "group": "navigation",
+          "order": 1
+        },
+        {
+          "submenu": "secdb.submenu.dependenciesFilter",
+          "when": "view == secdbDependenciesView",
+          "group": "navigation",
+          "order": 2
+        }
+      ],
+      "secdb.submenu.dependenciesFilter": [
+        {
+          "command": "secdb.dependencies.filter.all",
+          "when": "secdb.dependencies.filter != all",
+          "group": "filter"
+        },
+        {
+          "command": "secdb.dependencies.filter.direct",
+          "when": "secdb.dependencies.filter != direct",
+          "group": "filter"
+        },
+        {
+          "command": "secdb.dependencies.filter.transitive",
+          "when": "secdb.dependencies.filter != transitive",
+          "group": "filter"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "secdb.submenu.dependenciesFilter",
+        "label": "Filters",
+        "icon": "$(filter)"
+      }
+    ],
+    "commands": [
+      {
+        "command": "secdb.dependencies.audit",
+        "title": "Audit dependencies (workspace)",
+        "category": "ZEN SecDB",
+        "icon": "$(shield)"
+      },
+      {
+        "command": "secdb.dependencies.scan",
+        "title": "Scan dependencies (workspace)",
+        "category": "ZEN SecDB",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "secdb.dependencies.filter.all",
+        "title": "Show all dependencies",
+        "category": "ZEN SecDB",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "secdb.dependencies.filter.direct",
+        "title": "Show direct dependencies",
+        "category": "ZEN SecDB",
+        "icon": "$(eye-closed)"
+      },
+      {
+        "command": "secdb.dependencies.filter.transitive",
+        "title": "Show transitive dependencies",
+        "category": "ZEN SecDB",
+        "icon": "$(eye-closed)"
+      },
+      {
+        "command": "secdb.apiKey.actions",
+        "title": "API key actions",
+        "category": "ZEN SecDB"
+      },
+      {
+        "command": "secdb.mcp.actions",
+        "title": "MCP Server actions",
+        "category": "ZEN SecDB"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "ZEN SecDB",
+      "properties": {
+        "secdb.baseURL": {
+          "type": "string",
+          "default": "https://secdb.nttzen.cloud",
+          "description": "ZEN SecDB base URL."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^14.1.2",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.91.1",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.7.1",
+    "eslint": "^9.39.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.3"
+  },
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "bugs": {
+    "url": "https://github.com/giterlizzi/secdb-vscode/issues",
+    "email": "giuseppe.diterlizzi@nttdata.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/giterlizzi/secdb-vscode.git"
+  },
+  "homepage": "https://secdb.nttzen.cloud/docs/integrations/vscode",
+  "dependencies": {
+    "markdown-it": "^14.1.1",
+    "packageurl-js": "^2.0.1"
+  }
+}
