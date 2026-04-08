@@ -1,14 +1,21 @@
 # ZEN SecDB
 
+[![Version][version_badge]][version_link]
+[![Marketplace Downloads][downloads_badge]][marketplace]
+[![Open VSX Downloads][openvsx_downloads_badge]][openvsx]
+[![License][license_badge]][license]
+
+[Marketplace] | [OpenVSX] | [Releases]
+
 Dependency discovery, dependency audit, and vulnerability intelligence for Visual Studio Code.
 
-ZEN SecDB helps you detect project dependencies, audit them against [ZEN SecDB Portal](https://secdb.nttzen.cloud), surface advisories directly in VS Code, and investigate findings through built-in chat workflows.
+ZEN SecDB helps you detect project dependencies, audit them using [NTT DATA ZEN SecDB Portal][zen_secdb], surface advisories directly in VS Code, and analyze findings through built-in chat workflows.
 
 ## Features
 
 - Detect dependencies from supported project files
 - Generate PURLs (Package URL) for discovered packages
-- Audit dependencies against [ZEN SecDB Portal](https://secdb.nttzen.cloud)
+- Audit dependencies using [ZEN SecDB Portal][zen_secdb]
 - Show findings in the **Problems** panel
 - Browse detected dependencies in a dedicated **Tree View**
 - Open advisory details directly from VS Code
@@ -23,11 +30,14 @@ Current support includes:
 - **npm**
   - `package.json`
   - `package-lock.json`
+  - `yarn.lock`
 - **Python**
   - `requirements.txt`
   - `requirements-*.txt`
 - **Go**
   - `go.mod`
+- **Ruby**
+  - `Gemfile.lock`
 
 ## What the extension does
 
@@ -60,7 +70,7 @@ Findings are surfaced directly in:
 | Command | Description |
 |---|---|
 | **SecDB: Scan Dependencies** | Detect dependencies in the current workspace without running an audit. |
-| **SecDB: Audit Dependencies** | Detect dependencies and audit them against [ZEN SecDB Portal](https://secdb.nttzen.cloud). |
+| **SecDB: Audit Dependencies** | Detect dependencies and audit them using [ZEN SecDB Portal API][zen_secdb]. |
 
 ### MCP commands
 
@@ -126,9 +136,9 @@ This view is useful both for normal usage and for troubleshooting dependency det
 
 ## MCP integration
 
-ZEN SecDB automatically configure the [ZEN SecDB MCP server](https://secdb.nttzen.cloud/mcp) inside VS Code.
+ZEN SecDB automatically configure the [ZEN SecDB MCP server][zen_secdb_mcp_server] inside VS Code.
 
-  ![Finding Details](images/mcp-tools.png)
+  ![MCP Tools](images/mcp-tools.png)
 
 This is useful as a foundation for future MCP-driven workflows and server-side prompt integrations.
 
@@ -137,7 +147,7 @@ At the moment, the extension focuses on:
 - MCP server configuration
 - MCP-related actions from VS Code
 
-For more information, please refer to the [MCP Server](https://secdb.nttzen.cloud/docs/integrations/mcp) documentation on the [ZEN SecDB Portal](https://secdb.nttzen.cloud).
+For more information, please refer to the [MCP Server][zen_secdb_mcp_doc] documentation on the [ZEN SecDB Portal][zen_secdb].
 
 ## Chat integration
 
@@ -216,12 +226,48 @@ npm run compile
 npm run watch
 ```
 
-## See also
+## ZEN SecDB Portal
 
-- ZEN SecDB Portal: https://secdb.nttzen.cloud
-- ZEN SecDB MCP Server:
+- Daily Dashboard: https://secdb.nttzen.cloud
+- Vulnerabilities: https://secdb.nttzen.cloud/cve
+- Advisories: https://secdb.nttzen.cloud/security-advisory
+- Utility:
+  - PURL Audit: https://secdb.nttzen.cloud/pkg/audit/purl
+  - Linux Audit: https://secdb.nttzen.cloud/pkg/audit/linux
+  - CVSS Calculator: https://secdb.nttzen.cloud/cvss
+- Documentations & Integrations: https://secdb.nttzen.cloud/docs
+- API
+  - URL: https://secdb.nttzen.cloud/api/v1
+  - Documentation: https://secdb.nttzen.cloud/docs/api/openapi
+- MCP Server:
   - Server URL: https://secdb.nttzen.cloud/mcp
   - Documentation: https://secdb.nttzen.cloud/docs/integrations/mcp
+- Social:
+  - Telegram Bot: https://t.me/secdbportal_bot
+  - Telegram Channel: https://t.me/secdbportal_feed
+  - Mastodon: https://infosec.exchange/@secdb
+- About: https://secdb.nttzen.cloud/about
 
 ## License
 MIT, See [LICENSE](LICENSE.txt) for more information.
+
+<!-- Badges -->
+[version_badge]: https://img.shields.io/github/v/release/giterlizzi/secdb-vscode?include_prereleases&style=flat-square
+[version_link]: https://github.com/giterlizzi/secdb-vscode/releases/latest
+[downloads_badge]: https://img.shields.io/visual-studio-marketplace/d/gdt.zen-secdb?style=flat-square
+[installs_badge]: https://img.shields.io/visual-studio-marketplace/i/gdt.zen-secdb?style=flat-square
+[workflow_status_badge]: https://img.shields.io/github/actions/workflow/status/giterlizzi/secdb-vscode/build.yml?style=flat-square
+[workflow_status_link]: https://github.com/giterlizzi/secdb-vscode/actions
+[license_badge]: https://img.shields.io/github/license/giterlizzi/secdb-vscode?style=flat-square
+[openvsx_downloads_badge]: https://img.shields.io/open-vsx/dt/gdt/zen-secdb?color=purple&label=Open%20VSX%20Downloads&style=flat-square
+
+<!-- Links -->
+[zen_secdb]: https://secdb.nttzen.cloud
+[zen_secdb_mcp_server]: https://secdb.nttzen.cloud/mcp
+[zen_secdb_mcp_doc]: https://secdb.nttzen.cloud/docs/integrations/mcp
+[vscode]: https://code.visualstudio.com
+[marketplace]: https://marketplace.visualstudio.com/items?itemName=gdt.zen-secdb
+[openvsx]: https://open-vsx.org/extension/gdt/zen-secdb
+[releases]: https://github.com/giterlizzi/secdb-vscode/releases
+[changelog]: CHANGELOG.md
+[license]: LICENSE.txt
