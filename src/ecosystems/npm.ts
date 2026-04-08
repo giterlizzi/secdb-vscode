@@ -194,7 +194,7 @@ export class NpmDetector implements EcosystemDetector {
                 const packageHeaderMatch = line.match(/^([^\s].*):$/);
 
                 if (packageHeaderMatch) {
-                    const currentPackage = packageHeaderMatch[1].replace('"', '').split(',', 1)[0];
+                    const currentPackage = packageHeaderMatch[1].replace(/"/g, '').split(',', 1)[0];
                     currentPackageName = currentPackage.split('@').slice(0, -1).join('@');
                     continue;
                 }
