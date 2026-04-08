@@ -51,3 +51,8 @@ export interface PackageLockV2 {
 export interface PackageLockV1 {
     dependencies?: Record<string, { version?: string }>;
 }
+
+export interface EcosystemDetector {
+  readonly id: string;
+  detect(): Promise<Package[]>;
+}

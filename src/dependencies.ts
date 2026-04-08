@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
-import { detectPython, detectNpm, detectGo } from './ecosystems';
+import { PythonDetector, NpmDetector, RubyDetector, GoDetector } from './ecosystems';
 import { runtimeState } from './state/runtime';
 import { secretState } from './state/secret';
-import { Package, Finding, AuditResult } from './types';
-import { toDiagnosticSeverity } from './util';
+import { Package, Finding, AuditResult, EcosystemDetector } from './types';
+import { packageDeduplication, toDiagnosticSeverity } from './util';
 import { FINDING_MAX_DESCRIPTION_LENGTH } from './constants';
 
 const config = vscode.workspace.getConfiguration('secdb');
@@ -12,26 +12,44 @@ export async function scanDependencies() {
 
     return await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: 'ZEN SecDB: Scan dependencies in workspace...' }, async () => {
 
-        const dependencies = [
-            ...(await detectNpm()),
-            ...(await detectPython()),
-            ...(await detectGo())
+        const detectors: EcosystemDetector[] = [
+            new PythonDetector(),
+            new NpmDetector(),
+            new GoDetector(),
+            new RubyDetector()
         ];
 
-        console.log(`Detected ${dependencies.length} dependencies in workspace`);
+        const results = await Promise.all(
+            detectors.map(async detector => {
+                try {
 
-        return dependencies;
+                    console.debug(`[${detector.id}] detection started`);
+                    const packages = await detector.detect();
+                    console.debug(`[${detector.id}] detection completed (found ${packages.length} packages)`);
+
+                    return packages;
+
+                } catch (err) {
+                    console.error(`[${detector.id}] failed`, err);
+                    return [];
+                }
+            })
+        );
+
+        const packages = packageDeduplication(results.flat());
+
+        console.log(`Detected ${packages.length} packages in workspace`);
+        runtimeState.setPackages(packages);
+
+        return packages;
 
     });
 
 }
 
 export async function refreshDependencies(provider?: { refresh(): void }) {
-
-    const dependencies = await scanDependencies();
-    runtimeState.setPackages(dependencies);
+    await scanDependencies();
     provider?.refresh();
-
 }
 
 export async function auditDependencies(collection: vscode.DiagnosticCollection) {
@@ -116,6 +134,8 @@ async function callAuditAPI(config: vscode.WorkspaceConfiguration, packages: Pac
             body: JSON.stringify({ purls: packages.map(p => (p.purl)) })
         });
 
+        console.debug(`[ZEN SecDB] HTTP ${response.status}`);
+
         if (response.status === 429) {
             const retryAfter = response.headers.get('retry-after');
             vscode.window.showWarningMessage(`ZEN SecDB: rate limit (429). Retry-After: ${retryAfter ?? 'unknown'}s`);
@@ -125,10 +145,6 @@ async function callAuditAPI(config: vscode.WorkspaceConfiguration, packages: Pac
         if (!response.ok) {
             vscode.window.showErrorMessage(`ZEN SecDB: error ${response.status}`);
             return [];
-        }
-
-        if (!response.ok) {
-            console.log(`ZEN SecDB ${response.status}`);
         }
 
         return await response.json() as AuditResult[];
