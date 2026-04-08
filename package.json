@@ -3,7 +3,7 @@
   "publisher": "gdt",
   "displayName": "ZEN SecDB",
   "description": "Dependency audit and vulnerability intelligence for Visual Studio Code",
-  "version": "1.1.0-0",
+  "version": "1.1.0",
   "icon": "resources/icons/extension.png",
   "engines": {
     "vscode": "^1.91.0"
