@@ -117,6 +117,6 @@ export class SecDBDependenciesProvider implements vscode.TreeDataProvider<Depend
 
 export function registerDependenciesProvider(context: vscode.ExtensionContext, dependenciesProvider: vscode.TreeDataProvider<DependencyNode>) {
   context.subscriptions.push(
-    vscode.window.registerTreeDataProvider('secdbDependenciesView', dependenciesProvider)
+    vscode.window.registerTreeDataProvider('secdbDependencyTree', dependenciesProvider)
   );
 }

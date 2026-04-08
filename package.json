@@ -50,7 +50,7 @@
     "views": {
       "explorer": [
         {
-          "id": "secdbDependenciesView",
+          "id": "secdbDependencyTree",
           "name": "Dependencies (ZEN SecDB)"
         }
       ]
@@ -59,19 +59,19 @@
       "view/title": [
         {
           "command": "secdb.dependencies.scan",
-          "when": "view == secdbDependenciesView",
+          "when": "view == secdbDependencyTree",
           "group": "navigation",
           "order": 0
         },
         {
           "command": "secdb.dependencies.audit",
-          "when": "view == secdbDependenciesView",
+          "when": "view == secdbDependencyTree",
           "group": "navigation",
           "order": 1
         },
         {
           "submenu": "secdb.submenu.dependenciesFilter",
-          "when": "view == secdbDependenciesView",
+          "when": "view == secdbDependencyTree",
           "group": "navigation",
           "order": 2
         }
